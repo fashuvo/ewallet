@@ -36,12 +36,33 @@ function addItems(type, desc, value) {
 
   const collection = document.querySelector(".collection");
   collection.insertAdjacentHTML("afterbegin", newHTML);
+
+  addItemsToLS(desc, time, type, value);
 }
 
 function resetForm() {
   document.querySelector(".add__type").value = "+";
   document.querySelector(".add__description").value = "";
   document.querySelector(".add__value").value = "";
+}
+
+function getItemsFromLS() {
+  let items = localStorage.getItem("items");
+
+  if (items) {
+    items = JSON.parse(items);
+  } else {
+    items = [];
+  }
+
+  return items;
+}
+
+function addItemsToLS(desc, time, type, value) {
+  let items = getItemsFromLS();
+  items.push({ desc, time, type, value });
+
+  localStorage.setItem("items", JSON.stringify(items));
 }
 
 // Utility Functions
