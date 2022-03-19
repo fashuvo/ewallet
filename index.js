@@ -67,6 +67,8 @@ function addItems(type, desc, value) {
   collection.insertAdjacentHTML("afterbegin", newHTML);
 
   addItemsToLS(desc, time, type, value);
+  showTotalIncome();
+  showTotalExpense();
 }
 
 function resetForm() {
@@ -95,6 +97,38 @@ function addItemsToLS(desc, time, type, value) {
 
   localStorage.setItem("items", JSON.stringify(items));
 }
+
+// Calculator functions
+
+function showTotalIncome() {
+  let items = getItemsFromLS();
+  let totalIncome = 0;
+
+  for (item of items) {
+    if (item.type === "+") {
+      totalIncome += parseInt(item.value);
+    }
+  }
+
+  document.querySelector(".income__amount p").innerText = `$${totalIncome}`;
+}
+
+showTotalIncome();
+
+function showTotalExpense() {
+  let items = getItemsFromLS();
+  let totalExpense = 0;
+
+  for (item of items) {
+    if (item.type === "-") {
+      totalExpense += parseInt(item.value);
+    }
+  }
+
+  document.querySelector(".expense__amount p").innerText = `$${totalExpense}`;
+}
+
+showTotalExpense();
 
 // Utility Functions
 function getFormattedTime() {
