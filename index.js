@@ -69,6 +69,7 @@ function addItems(type, desc, value) {
   addItemsToLS(desc, time, type, value);
   showTotalIncome();
   showTotalExpense();
+  showTotalBalance();
 }
 
 function resetForm() {
@@ -82,13 +83,15 @@ function resetForm() {
 function getItemsFromLS() {
   let items = localStorage.getItem("items");
 
-  if (items) {
-    items = JSON.parse(items);
-  } else {
-    items = [];
-  }
+  return (items = items ? JSON.parse(items) : []);
 
-  return items;
+  // if (items) {
+  //   items = JSON.parse(items);
+  // } else {
+  //   items = [];
+  // }
+
+  //return items;
 }
 
 function addItemsToLS(desc, time, type, value) {
@@ -105,9 +108,7 @@ function showTotalIncome() {
   let totalIncome = 0;
 
   for (item of items) {
-    if (item.type === "+") {
-      totalIncome += parseInt(item.value);
-    }
+    item.type === "+" ? (totalIncome += parseInt(item.value)) : totalIncome;
   }
 
   document.querySelector(".income__amount p").innerText = `$${totalIncome}`;
@@ -120,15 +121,31 @@ function showTotalExpense() {
   let totalExpense = 0;
 
   for (item of items) {
-    if (item.type === "-") {
-      totalExpense += parseInt(item.value);
-    }
+    item.type === "-" ? (totalExpense += parseInt(item.value)) : totalExpense;
   }
 
   document.querySelector(".expense__amount p").innerText = `$${totalExpense}`;
 }
 
 showTotalExpense();
+
+function showTotalBalance() {
+  const items = getItemsFromLS();
+  let balance = 0;
+
+  for (item of items) {
+    if (item.type === "+") {
+      balance += parseInt(item.value);
+    } else {
+      balance -= parseInt(item.value);
+    }
+  }
+
+  document.querySelector(".balance__amount p").innerText = balance;
+  document.querySelector("header").className = balance >= 0 ? "green" : "red";
+}
+
+showTotalBalance();
 
 // Utility Functions
 function getFormattedTime() {
