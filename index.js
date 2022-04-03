@@ -35,7 +35,7 @@ function showItems() {
       <div class="item-amount ${
         item.type === "+" ? "income-amount" : "expense-amount"
       }">
-        <p>${item.type}$${item.value}</p>
+        <p>${item.type}$${separator(item.value)}</p>
       </div>
     </div>
       `;
@@ -58,7 +58,7 @@ function addItems(type, desc, value) {
     <div class="item-amount ${
       type === "+" ? "income-amount" : "expense-amount"
     }">
-      <p>${type}$${value}</p>
+      <p>${type}$${separator(value)}</p>
     </div>
   </div>
     `;
@@ -82,16 +82,7 @@ function resetForm() {
 
 function getItemsFromLS() {
   let items = localStorage.getItem("items");
-
   return (items = items ? JSON.parse(items) : []);
-
-  // if (items) {
-  //   items = JSON.parse(items);
-  // } else {
-  //   items = [];
-  // }
-
-  //return items;
 }
 
 function addItemsToLS(desc, time, type, value) {
@@ -105,26 +96,26 @@ function addItemsToLS(desc, time, type, value) {
 
 function showTotalIncome() {
   let items = getItemsFromLS();
-  let totalIncome = 0;
+  let totalIncome = items
+    .filter((item) => item.type === "+")
+    .reduce((income, item) => income + parseInt(item.value), 0);
 
-  for (item of items) {
-    item.type === "+" ? (totalIncome += parseInt(item.value)) : totalIncome;
-  }
-
-  document.querySelector(".income__amount p").innerText = `$${totalIncome}`;
+  document.querySelector(".income__amount p").innerText = `$${separator(
+    totalIncome
+  )}`;
 }
 
 showTotalIncome();
 
 function showTotalExpense() {
   let items = getItemsFromLS();
-  let totalExpense = 0;
+  let totalExpense = items
+    .filter((item) => item.type === "-")
+    .reduce((expense, item) => expense + parseInt(item.value), 0);
 
-  for (item of items) {
-    item.type === "-" ? (totalExpense += parseInt(item.value)) : totalExpense;
-  }
-
-  document.querySelector(".expense__amount p").innerText = `$${totalExpense}`;
+  document.querySelector(".expense__amount p").innerText = `$${separator(
+    totalExpense
+  )}`;
 }
 
 showTotalExpense();
@@ -141,7 +132,7 @@ function showTotalBalance() {
     }
   }
 
-  document.querySelector(".balance__amount p").innerText = balance;
+  document.querySelector(".balance__amount p").innerText = separator(balance);
   document.querySelector("header").className = balance >= 0 ? "green" : "red";
 }
 
@@ -160,4 +151,8 @@ function getFormattedTime() {
   const time = now.split(",")[1];
 
   return `${date[1]} ${date[0]},${time}`;
+}
+
+function separator(amount) {
+  return parseInt(amount).toLocaleString();
 }
