@@ -156,3 +156,5 @@ function getFormattedTime() {
 function separator(amount) {
   return parseInt(amount).toLocaleString();
 }
+
+console.log("Testing"); 
