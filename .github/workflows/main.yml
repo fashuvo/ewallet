@@ -9,7 +9,4 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install from Steps
-        run: npm install
-
       - uses: preactjs/compressed-size-action@v2
