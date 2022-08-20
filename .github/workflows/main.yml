@@ -1,13 +1,16 @@
-name: GH Actions Testing
+name: GH Actions Testing First Name
 
 on: [push]
 
 jobs:
   test:
-    name: GH Actions Test Name
+    name: GH Actions Test Name from Jobs
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install
+      - name: Install from Steps
         run: npm install
+
+      - name: compressed-size-action
+        uses: preactjs/compressed-size-action@2.5.0
