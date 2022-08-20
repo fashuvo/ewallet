@@ -3,7 +3,7 @@ name: GH Actions Testing First Name
 on: [push]
 
 jobs:
-  test:
+  build:
     name: GH Actions Test Name from Jobs
     runs-on: ubuntu-latest
 
