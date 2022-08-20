@@ -11,4 +11,4 @@ jobs:
       - uses: actions/checkout@v2
       - uses: preactjs/compressed-size-action@v2
         with:
-        pattern: "{build/**/*.js,build/**/*.css}"
+          pattern: "{build/**/*.js,build/**/*.css}"
