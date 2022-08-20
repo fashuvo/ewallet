@@ -4,7 +4,7 @@
   "description": "A test app to store income and expenses",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node-sass --include-path scss scss/main.min.scss build/css/style.min.css"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/fashuvo/ewallet/issues"
   },
-  "homepage": "https://github.com/fashuvo/ewallet#readme"
+  "homepage": "https://github.com/fashuvo/ewallet#readme",
+  "devDependencies": {
+    "browserify": "^17.0.0",
+    "node-sass": "^7.0.1"
+  },
+  "dependencies": {
+    "jquery": "^3.6.0"
+  }
 }
