@@ -1,6 +1,6 @@
 name: GH Actions Testing First Name
 
-on: [pull_request]
+on: [push]
 
 jobs:
   build:
